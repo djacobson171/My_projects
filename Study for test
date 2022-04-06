@@ -1,0 +1,130 @@
+# print my name at the top.
+print('Daniel Pinelis')
+print('----------------------------')
+def main():
+    
+    subjects = ['History', 'Spanish']
+
+    # Asks the user to choose which subject they want to study.    
+    for elements in subjects:
+        print(elements)
+    studySubject = input('Choose a subject to study for. ')
+
+    # If the user enters an option that is not given in the menu, then the program allows the user to try again.
+    while (studySubject != 'History' and studySubject != 'Spanish'):
+        print('The option is not in the menu. Try Again.')
+        studySubject = input('Choose a subject to study for. ')
+
+    # Calls a function that decides what file to open based on the user's input.
+    chooseSubject(studySubject)
+def flashcardsStudy(studySubject, fileName):
+
+    # Sets all the variables needed to their initial values.
+    fileLines = []
+    flashcardsA = []
+    flashcardsQ = []
+    flashcards = []
+    index = 0
+    index2 = 0
+
+    # Tries to open file, but if the file does not exist, then the program prints that the file isn't found and asks the user to enter a file that exists.
+    # If the user still doesn't enter an existing file, the program ends.
+    try:
+        fileObject = open(fileName, 'r')
+    except:
+        print('File not found.')
+        fileName = input('Enter a file that exists. ')
+
+    finally:
+        try:
+            fileObject = open(fileName, 'r')
+        except:
+            print('file still does not exist. Try again later.')
+        else:
+            
+            # Asks user if they want to be graded on the flashcards.
+            graded = input('Would you like to be graded? Type Y for yes and N for no. ')
+
+            # Appends all the lines in a file into a list.
+            for lines in fileObject:
+                fileLines.append(lines)
+
+            fileObject.close()
+
+            # Removes all elements in the list that are newlines.
+            for i in fileLines:
+                if i == ' \n' or i == '\n':
+                    fileLines.remove(i)
+
+            # Seperates the elements in the first list into two new lists. One for questions and one for answers.
+            for i in range(0,len(fileLines)):
+                if i % 2: 
+                    flashcardsA.append(fileLines[i]) 
+                else : 
+                    flashcardsQ.append(fileLines[i])
+
+            # Makes a two-dimensional list of questions and answers.
+            for element in flashcardsQ:
+                flashcards.append([])
+                flashcards[index].append(flashcardsQ[index])
+                flashcards[index].append(flashcardsA[index])
+                index = index + 1
+            index = 0
+            index4 = 1
+            score = 0
+
+            # Prints a question at a time and asks for the user to enter an answer.
+            # Checks if what the user enters matches the correct answer.
+            # If it is correct, it prints correct, otherwise it prints incorrect and displays the correct answer.
+            for elements in flashcards:
+                questions = input(flashcards[index][index2])
+                if index > len(flashcards) - 1:
+                    index = 0
+                questions = questions.lower()
+                flashcards[index][index4] = flashcards[index][index4].lower()
+                flashcards[index][index4] = flashcards[index][index4].rstrip()
+                if questions == flashcards[index][index4]:
+                    print('Correct')
+                    print('')
+
+                    # If the user said yes to grading, the program counts how many questions they got right.
+                    if graded == 'Y':
+                        score = score + 1        
+                else:
+                    print('incorrect')
+                    print('Correct Answer: ' + flashcards[index][index4])
+                    print('')
+                index += 1
+
+            # The program displays the score of the user as a precent and as a fraction.
+            if graded == 'Y':
+                percent = (score/len(flashcards)) * 100
+                print('Your score: ' + str(score) + '/' + str(len(flashcards)) + ' or ' + str(percent) + '%')
+
+            # Asks the user if they want to study again.
+            runAgainOrNot = input('Do you want to try again? (Y/N)? ')
+
+            # If the user wants to study again, the program restarts, but if the user enter anything but a Y, the program displays a message and ends.
+            if runAgainOrNot == 'Y' or runAgainOrNot == 'y':
+                main()
+            elif runAgainOrNot == 'N'or runAgainOrNot == 'n':
+                print('Thanks for studying.')
+
+# Function that decides what file to open based on the subject the user selected.
+def chooseSubject(studySubject):
+                   
+    if studySubject == 'History':
+        flashcardsStudy('History', 'History.txt')
+    elif studySubject == 'Spanish':
+        flashcardsStudy('Spanish', 'Spanish.txt')
+main()
+
+
+
+ 
+            
+       
+          
+
+
+
