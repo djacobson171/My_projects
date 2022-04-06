@@ -1,0 +1,100 @@
+# Prints my name at the top and imports tkinter
+print('Daniel Pinelis')
+
+from tkinter import *
+
+# Create a class for the calculator
+class Calculator:
+
+# This function makes an entry box where the expressions are displayed and calls the makeButton function to display all the calculator buttons
+    def __init__(self, master):
+        
+        self.master = master
+
+        # Creates a name for the calculator window
+        master.title("Basic python Calculator")
+
+        # Displays the entry box for the equation and displays the number zero when the calculator is first opened
+        self.equation = Entry(master, width=45, borderwidth=10, fg='red')
+        
+        # Positions the entry box
+        self.equation.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+        # Calls the makeButton function
+        self.makeButton()
+
+    # This function creates all the buttons for the calculator and positions them in the right order
+    def makeButton(self):
+
+        # Creates all the buttons
+        button0 = self.displayButton(0)
+        button1 = self.displayButton(1)
+        button2 = self.displayButton(2)
+        button3 = self.displayButton(3)
+        button4 = self.displayButton(4)
+        button5 = self.displayButton(5)
+        button6 = self.displayButton(6)
+        button7 = self.displayButton(7)
+        button8 = self.displayButton(8)
+        button9 =  self.displayButton(9)
+        buttonAdd = self.displayButton('+')
+        buttonSubtract = self.displayButton('-')
+        buttonMultiply = self.displayButton('*')
+        buttonDivide = self.displayButton('/')
+        buttonClear = self.displayButton('c')
+        buttonEqual = self.displayButton('=')
+        buttonDecimal = self.displayButton('.')
+
+        # Makes the same list for all the buttons that are on the same row
+        firstRow=[button7,button8,button9,buttonAdd]
+        secondRow=[button4,button5,button6,buttonSubtract]
+        thirdRow=[button1,button2,button3,buttonMultiply]
+        fourthRow=[buttonClear,button0,buttonEqual,buttonDivide,buttonDecimal]
+
+        # Positions all the buttons
+        r=1
+        for row in [firstRow, secondRow, thirdRow, fourthRow]:
+            c=0
+            for button in row:
+                button.grid(row=r, column=c, columnspan=1)
+                c = c + 1
+            r = r + 1
+
+    
+    # This function displays each button needed for the calculator
+    def displayButton(self,value):
+        return Button(self.master, text=value, width=9, command = lambda: self.clickButton(str(value)), fg='blue', highlightbackground='green')
+    
+    # This function updates the entry box when the user presses a button and displays the final answer when the user presses the equal sign.
+    def clickButton(self, value):
+        
+        # Gets the equations that the user enters.
+        current_equation=str(self.equation.get())
+
+        # When the user presses 'c' on the calculator, the entry box becomes empty.
+        if value == 'c':
+            self.equation.delete(-1, END)
+        
+        # When the user presses '=' on the calculator the final answer is displayed in the entry box.
+        elif value == '=':
+            answer = str(eval(current_equation))
+            self.equation.delete(-1, END)
+            self.equation.insert(0, answer)
+        
+        # Any other button that the user presses, it will be displayed in the entry box.
+        else:
+            self.equation.delete(0, END)
+            self.equation.insert(-1, current_equation+value)
+    def clear_text(self):
+        self.equation.delete(0, 'end')
+        
+if __name__=='__main__':
+    
+    # Makes the main window of the calculator
+    root = Tk()
+    
+    my_gui = Calculator(root)
+    
+    # Creates an executable loop and waits until the user does something.
+    root.mainloop()
+
