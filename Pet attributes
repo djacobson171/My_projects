@@ -1,0 +1,60 @@
+# This program creates a class that holds data about a pet.
+# Then creates an object that asks the user for the information and displays it on the screen.
+
+# Prints my name at the top.
+print('Daniel Pinelis')
+
+class Pet:
+
+    # Initializes the attributes for the pet.
+    def __init__(self, name, animalType, age):
+        self.__name = name
+        self.__animalType = animalType
+        self.__age = age
+
+    # Accepts an argument for the pet's name.
+    def set_name(self, name):
+        self.__name = name
+
+    # Accepts an argument for the type of the animal.
+    def set_animalType(self, animalType):
+        self.__animalType = animalType
+
+    # Accepts an argument for the pet's age
+    def set_age(self, age):
+        self.__age = age
+
+    # Returns the name of the pet.
+    def get_name(self):
+        return self.__name
+
+    # Returns the animal type of the pet.
+    def get_animalType(self):
+        return self.__animalType
+
+    # Returns the age of the pet.
+    def get_age(self):
+        return self.__age
+    
+def main():
+
+    # Asks the user for the attributes of the pet.
+    name = input('Enter the name: ')
+    animalType = input('Enter the animal type: ')
+    age = int(input('Enter the age as an integer: '))
+
+    # Creates an instance of the pet class
+    pets = Pet(name, animalType, age)
+
+    # Prints the data that the user entered.
+    print('\n')
+    print('Here is what you entered:')
+    print('Name:', pets.get_name())
+    print('Animal Type:', pets.get_animalType())
+    print('Age:', pets.get_age())
+
+# Calls the main function.
+main()
+
+    
+       
