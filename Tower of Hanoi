@@ -1,0 +1,70 @@
+# Prints my name at the top.
+print('Daniel Pinelis')
+
+# Uses a try statement if the user enters a string for numRings.
+try:
+    # Ask the user for the number of rings they want to solve for.
+    numRings = int(input('How many rings do you want to use? Minimum rings allowed is 3. '))
+except:
+    # If user enters a string, the program prints to print an integer.
+    print('Enter an integer next time.')
+else:
+    # Makes dictionary with three keys for the three pegs and allows user to only enter number of rings greater than or equal to 3.
+    if numRings >= 3:
+        pegsDictionary = {1:[], 2:[], 3:[]}
+        steps = 1
+
+        # Prints the number of steps it takes to solve for n rings.
+        print('The minimum number of moves needed is ' + str(2**numRings -1) + ' for ' + str(numRings) + ' rings.')
+        print('')
+        print('Original: ')
+
+        # Appends all the rings to the first list.
+        for x in range(numRings, 0, -1):
+                pegsDictionary[1].append(x)
+
+        # Function that solves the tower of hanoi.
+        def towerOfHanoi(numRings , source, destination, aux, pegsDictionary, steps):
+            # If there is one more ring left on the first peg, move it to the third peg and print the step.
+            if numRings==1:
+                pegsDictionary[destination].append(pegsDictionary[source].pop())
+                print('Step ' + str(steps) + ': ') # Prints the number of step the program is on.
+                draw(pegsDictionary) # Calls the draw function to draw a step.
+                steps += 1
+                print('________________')
+                # Returns dictionary and the steps variable
+                return pegsDictionary, steps
+
+            # Code to move all the rings to the third peg.
+            pegsDictionary, steps = towerOfHanoi(numRings-1, source, aux, destination, pegsDictionary, steps)
+            pegsDictionary[destination].append(pegsDictionary[source].pop())
+            print('Step ' + str(steps) + ': ')
+            draw(pegsDictionary)
+            steps += 1
+            print('________________')
+            pegsDictionary, steps = towerOfHanoi(numRings-1, aux, destination, source, pegsDictionary, steps)
+            return pegsDictionary, steps       
+
+        # Function that prints each step of how to solve the tower of hanoi.      
+        def draw(pegsDictionary):
+            nRings = max(pegsDictionary[1] + pegsDictionary[2] + pegsDictionary[3])
+
+            # The nested for loops print each line row by column times.
+            for r in range(nRings):
+                for c in range(1, len(pegsDictionary) + 1):
+                    currentList = pegsDictionary[c]
+                    nRingsPegs = len(currentList)
+                    if nRingsPegs >= nRings-r:
+                        print(currentList[nRings-1-r],'','','',end='')
+                        
+                    else:
+                        # If there is no ring, the program prints a line for a blank peg.
+                        print('|','','','',end='') 
+                print('')
+        draw(pegsDictionary)
+        print('________________')
+        towerOfHanoi(numRings, 1, 3, 2, pegsDictionary, steps)
+    else:
+        # If user enters number less than 3 for numRings, the programs prints to type a number greater than or equal to three.
+        print('Type a number greater than or equal to 3 next time. ')
+
