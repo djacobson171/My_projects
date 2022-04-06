@@ -1,0 +1,43 @@
+# Prints my name at the top.
+print('Daniel Pinelis')
+
+# Makes a list with the first digit of the Fibonacci sequence.
+fibSeries = [0]
+
+# Asks the user to enter the position of the Fibonacci sequence that they want to display.
+
+numFib = int(input('What position of n in the Fibonacci sequence do you want to be displayed? Pls enter an integer only. '))
+
+# Checks if numFib is positive. If it is, it prints out the starting statement for the pyramid and the first line of the pyramid.
+# If it is not, it asks the user to enter a valid number.
+if numFib >= 0:
+    print('The visual pyramid of position ' + str(int(numFib)) + ' in the Fibonacci sequence looks like this: ')
+    # Prints the first part of the Fibonacci pyramid.
+    # Converts the list to a string and removes the commas.
+    print((str(fibSeries).strip('[]')).replace(',',''))
+else:
+    print('Enter a valid number. ')
+    numFib = int(input('What position of n in the Fibonacci sequence do you want to be displayed? Pls enter an integer. '))
+
+# If the user wants the first or higher position in the Fibonacci sequence, then the program prints the second line of the pyramid.
+if numFib >= 1:
+    fibSeries = [0,1]
+    print((str(fibSeries).strip('[]')).replace(',',''))
+        
+    # Defines a function that recursively calculates and then returns the n'th element of the Fibonacci series.
+    def fib(numFib):
+        if numFib<len(fibSeries) and numFib>=0:
+                
+                return fibSeries[numFib]
+        else:
+                fibSeries.append(fib(numFib-1) + fib(numFib-2))
+                print((str(fibSeries).strip('[]')).replace(',',''))
+                return fib(numFib-1) + fib(numFib-2)
+
+# Prints the n'th element of the Fibonacci series that the user wants.
+if numFib == 0:
+    print('Position 0 in the Fibonnaci sequence is: 0')
+if numFib >= 1:
+    print('Position ' + str(int(numFib)) +  ' in the Fibonnaci sequence is: ' + str(fib(numFib)))
+
+
