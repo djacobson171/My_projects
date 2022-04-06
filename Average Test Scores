@@ -1,0 +1,59 @@
+# Prints my name at the top
+# asks the user for 5 test scores
+# prints the letter grade for each test score
+# calls the calc_average function.
+def main():
+    print('Daniel Pinelis')
+    
+    testScore = int(input('Enter test score 1. '))
+    print('That is a(n): ' + determine_grade(testScore))
+    testScore1 = testScore
+    
+    testScore = int(input('Enter test score 2. '))
+    print('That is a(n): ' + determine_grade(testScore))
+    testScore2 = testScore
+    
+    testScore = int(input('Enter test score 3. '))
+    print('That is a(n): ' + determine_grade(testScore))
+    testScore3 = testScore
+    
+    testScore = int(input('Enter test score 4. '))
+    print('That is a(n): ' + determine_grade(testScore))
+    testScore4 = testScore
+    
+    testScore = int(input('Enter test score 5. '))
+    print('That is a(n): ' + determine_grade(testScore))
+    testScore5 = testScore
+
+    calc_average(testScore1, testScore2, testScore3, testScore4, testScore5)
+    
+# Takes 5 test scores as the arguments
+# calculates the average of all the test scores
+# prints the average, prints the letter grade of the average
+# returns the average.    
+def calc_average(testScore1, testScore2, testScore3, testScore4, testScore5):
+    testAverage = (testScore1 + testScore2 + testScore3 + testScore4 + testScore5)/5
+    testAverage = round(testAverage, 2)
+    print('The average of your 5 test scores is:', testAverage)
+    print('That is a(n): ' + determine_grade(testAverage))
+    return testAverage
+
+# Takes a test score as an argument
+# checks the conditions to determine what letter grade each test score and average is.    
+def determine_grade(testScore):
+    if 90 <= testScore <= 100:
+        return 'A'
+    elif 80 <= testScore <= 89:
+        return 'B'
+    elif 70 <= testScore <= 79:
+        return 'C'
+    elif 60 <= testScore <= 69:
+        return 'D'
+    else:
+        return 'F'
+    
+main()
+
+      
+                    
+
