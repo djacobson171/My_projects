@@ -1,0 +1,58 @@
+# prints my name at the top.
+print('Daniel Pinelis')
+
+# imports the requests and the json modules
+import requests, json
+
+# Makes a variav=ble for my apiKey
+apiKey = '89490a0347504705b821378b93c9e9fd'
+
+# Makes a variable for the base Url
+baseUrl = 'http://newsapi.org/v2/everything?'
+
+# Asks the user what headline they want to search for.
+headLines = input('What headline topic do you want to look at? ')
+
+# Makes a complete Url where the program accesses the news.
+completeUrl = baseUrl  + 'q=' + str(headLines) + '&apiKey=' + str(apiKey) 
+
+# Requests the data from the Url.
+response = requests.get(completeUrl)
+
+data = response.json()
+
+# The program tries to execute the code, but if it doesn't work, it prints the message: 'the request is invalid.'
+try:
+    # Checks if status is ok.
+    if data['status'] == 'ok':
+        mainDetail = data['articles']
+        values = 0
+
+        # Creates variables for all the information needed, removes the brackets and commas, and prints it for every headline.
+        for headline in mainDetail:
+            value = mainDetail[values]['source']['name']
+            values+=1
+            value2 = str(value).strip('[]').replace(',','').lower()
+            title = [headline['title']]
+            lowerCaseTitle = str(title).strip('[]').replace(',','').lower()
+            url = [headline['url']]
+            lowerCaseUrl = str(url).strip('[]').replace(',','').lower()
+            description = str([headline['description']]).strip('[]').replace(',','').lower()
+            content = str([headline['content']]).strip('[]').replace(',','').lower()
+            
+
+            # If information about coronavirus is not in the headline, then the program prints the headline.
+            if 'corona' not in value2 and 'corona' not in lowerCaseTitle and 'corona' not in lowerCaseUrl and 'corona' not in description and 'corona' not in content and 'covid' not in value2 and 'covid' not in lowerCaseTitle and 'covid' not in lowerCaseUrl and 'covid' not in description and 'covid' not in content:
+                print(('\n' + str(value).strip('[]').replace(',','""') + ' - ' + str(title).strip('[]')).replace(',','""') + (str(url).strip('[]')).replace(',','""') + '\n')
+                
+    # If the information entered is invalid, then the program prints error.
+    else:
+        print('Error')
+    
+except:
+    print(data['message'])
+
+
+  
+
+
